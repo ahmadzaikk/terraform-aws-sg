@@ -29,14 +29,14 @@ include {
 
 inputs = {
   name   = "rds-sg-test"
-  vpc_id = "vpc-06a0bfef01b9d0e7b"
+  vpc_id = "vpc-0909008009"
   rules = [
     {
       type        = "ingress"
       from_port   = 22
       to_port     = 22
       protocol    = "tcp"
-      cidr_blocks = ["128.48.0.0/16"]
+      cidr_blocks = ["129.98.0.0/16"]
       self        = null
       description = "Allow SSH from anywhere"
     },
@@ -45,7 +45,7 @@ inputs = {
       from_port   = 3306
       to_port     = 3306
       protocol    = "tcp"
-      cidr_blocks = ["128.48.0.0/16"]
+      cidr_blocks = ["129.98.0.0/16""]
       self        = true
       description = "Allow RDS from inside the security group"
     },
@@ -54,7 +54,7 @@ inputs = {
       from_port   = 3389
       to_port     = 3389
       protocol    = "tcp"
-      cidr_blocks = ["128.48.0.0/16"]
+      cidr_blocks = ["129.98.0.0/16""]
       self        = true
       description = "Allow RDP from inside the security group"
     },
