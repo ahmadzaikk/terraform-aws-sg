@@ -8,7 +8,6 @@ locals {
       rule.protocol,
       rule.from_port,
       rule.to_port,
-      rule.source_security_group_id,
       try(rule["description"], null) == null ? md5(format("Managed by Terraform #%d", indx)) : md5(rule.description)
     ) => rule
   } : {}
