@@ -11,6 +11,17 @@ locals {
       try(rule["description"], null) == null ? md5(format("Managed by Terraform #%d", indx)) : md5(rule.description)
     ) => rule
   } : {}
+  
+  ruless = var.rules != null ? {
+    for indx, rule in flatten(var.rules) :
+    format("%v-%v-%v-%v-%s",
+      rule.type,
+      rule.protocol,
+      rule.from_port,
+      rule.to_port,
+      try(rule["description"], null) == null ? md5(format("Managed by Terraform #%d", indx)) : md5(rule.description)
+    ) => rule
+  } : {}
 }
 
 resource "aws_security_group" "this" {
@@ -34,7 +45,7 @@ resource "aws_security_group_rule" "this" {
   
 }
 resource "aws_security_group_rule" "this1" {
-  for_each = local.rules
+  for_each = local.ruless
   security_group_id = aws_security_group.this.*.id[0]
   type              = each.value.type
   from_port         = each.value.from_port
