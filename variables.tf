@@ -3,6 +3,11 @@ variable "vpc_id" {
   description = "The VPC ID where Security Group will be created."
 }
 
+variable "source_security_group_id" {
+  type        = string
+  description = "source_security_group_id"
+  default = null
+}
 variable "security_group_enabled" {
   type        = bool
   default     = true
