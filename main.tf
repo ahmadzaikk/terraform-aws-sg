@@ -30,7 +30,7 @@ resource "aws_security_group_rule" "this" {
   protocol          = each.value.protocol
   description       = lookup(each.value, "description", "Managed by Terraform")
   cidr_blocks      = try(length(lookup(each.value, "cidr_blocks", [])), 0) > 0 ? each.value["cidr_blocks"] : null
-  source_security_group_id = lookup(each.value, "source_security_group_id",[])
+  source_security_group_id = var.source_security_group_id
   
 
 
