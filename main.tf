@@ -8,6 +8,7 @@ locals {
       rule.protocol,
       rule.from_port,
       rule.to_port,
+      security_groups  = rule.security_groups,
       try(rule["description"], null) == null ? md5(format("Managed by Terraform #%d", indx)) : md5(rule.description)
     ) => rule
   } : {}
@@ -30,7 +31,8 @@ resource "aws_security_group_rule" "this" {
   to_port           = each.value.to_port
   protocol          = each.value.protocol
   description       = lookup(each.value, "description", "Managed by Terraform")
-  source_security_group_id      = try(length(lookup(each.value, "source_security_group_id", [])), 0) > 0 ? each.value["source_security_group_id"] : null
+  security_groups  = lookup(each.value, "security_groups", null)
+  cidr_blocks      = try(length(lookup(each.value, "cidr_blocks", [])), 0) > 0 ? each.value["cidr_blocks"] : null
  
   
 }
